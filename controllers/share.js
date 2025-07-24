@@ -13,7 +13,6 @@ const createShare = async (req, res) => {
   try {
     const { skillOffered, skillNeeded, description, sharedBy } = req.body;
 
-    // const sharedBy = mongoose.Types.ObjectId(); // for testing
     if (!skillOffered || !skillNeeded || !sharedBy) {
       return res
         .status(400)
