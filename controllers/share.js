@@ -9,6 +9,15 @@ const getShared = async (req, res) => {
   }
 };
 
+const getSharedByID = async (req, res) => {
+  try {
+    const shared = await Share.findById(req.params.id);
+    res.status(200).json(shared);
+  } catch (error) {
+    res.status(500).json({ err: "Failed to fetch Shared Skills" });
+  }
+};
+
 const createShare = async (req, res) => {
   try {
     const { skillOffered, skillNeeded, description, sharedBy } = req.body;
@@ -33,4 +42,4 @@ const createShare = async (req, res) => {
   }
 };
 
-module.exports = { getShared, createShare };
+module.exports = { getShared, createShare, getSharedByID };

@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
     requester: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true
     },
     post: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Post',
         required: true
     },
@@ -26,4 +26,4 @@ const requestSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Request', requestSchema);
+module.exports = mongoose.model("Request", requestSchema);

@@ -1,4 +1,4 @@
-const Request = require("../models/Request");
+const Request = require("../models/request");
 
 const getRequest = async (req, res) => {
   try {
@@ -9,11 +9,25 @@ const getRequest = async (req, res) => {
   }
 };
 
+const getRequestByID = async (req, res) => {
+  try {
+    const request = await Request.findById(req.params.id);
+    res.status(200).json(request);
+  } catch (err) {
+    res.status(500).json({ error: "Server Error" });
+  }
+};
+
 const sendReq = async (req, res) => {
   const { requester, post, message, status } = req.body;
 
   if (!requester || !post || !message) {
-    return res.status(400).json({ error: "Missing fields", required: "requester, post and message are required fields" });
+    return res
+      .status(400)
+      .json({
+        error: "Missing fields",
+        required: "requester, post and message are required fields",
+      });
   }
 
   try {
@@ -29,4 +43,4 @@ const sendReq = async (req, res) => {
   }
 };
 
-module.exports = { getRequest, sendReq };
+module.exports = { getRequest, sendReq, getRequestByID };
