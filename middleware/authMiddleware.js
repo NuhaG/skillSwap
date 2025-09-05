@@ -1,22 +1,19 @@
-const jwt = require("jsonwebtoken");
+const { UnauthenticatedError } = require("../errors");
 
-const authMiddleware = async (req, res, next) => {
+const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    res.status(401).json({ msg: "Please provide token" });
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
+    throw new UnauthenticatedError("Authentication Invalid");
   }
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const { id, username } = decoded;
-      req.user = { id, username };
-      next();
-    } catch (error) {
-      res.status(401).json({ msg: "Unathorized" });
-    }
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { userId: payload.userId, name: payload.name };
+    next();
+  } catch (error) {
+    throw new UnauthenticatedError("Authorization Invalid");
   }
 };
 
-module.exports = { authMiddleware };
+module.exports = auth;
