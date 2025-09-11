@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
     requester: {
-        type: String,
+        type: mongoose.Types.ObjectId,
         ref: 'User',
         required: true
     },
     post: {
-        type: String,
+        type: mongoose.Types.ObjectId,
         ref: 'Post',
         required: true
     },
@@ -24,6 +24,6 @@ const requestSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model("Request", requestSchema);
