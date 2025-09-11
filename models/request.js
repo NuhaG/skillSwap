@@ -8,7 +8,7 @@ const requestSchema = new mongoose.Schema({
     },
     post: {
         type: mongoose.Types.ObjectId,
-        ref: 'Post',
+        ref: 'Share',
         required: true
     },
     message: {
