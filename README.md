@@ -13,8 +13,8 @@ Skill Swap is a platform where users can share their skills and request to learn
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/skillswap.git
-    cd skillswap
+    git clone https://github.com/NuhaG/skillSwap.git
+    cd skillSwap
     ```
 
 2. **Install dependencies:**
