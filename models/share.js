@@ -13,7 +13,7 @@ const shareSchema = new mongoose.Schema({
     type: String,
   },
   sharedBy: {
-    type: String,
+    type: mongoose.Types.ObjectId,
     ref: "User",
     required: true,
   },

@@ -1,3 +1,4 @@
+const { BadRequestError } = require("../errors");
 const Share = require("../models/share");
 
 const getShared = async (req, res) => {
@@ -19,27 +20,17 @@ const getSharedByID = async (req, res) => {
 };
 
 const createShare = async (req, res) => {
-  try {
-    const { skillOffered, skillNeeded, description, sharedBy } = req.body;
-
-    if (!skillOffered || !skillNeeded || !sharedBy) {
-      return res
-        .status(400)
-        .json({ err: "skillOffered, skillNeeded and sharedBy are required" });
-    }
-
-    const newShare = new Share({
-      skillOffered,
-      skillNeeded,
-      description,
-      sharedBy,
-    });
-
-    const save = await newShare.save();
-    res.status(201).json(save);
-  } catch (error) {
-    res.status(500).json({ err: "Failed to create Skill" });
+  const { skillOffered, skillNeeded, description } = req.body;
+  if (!skillOffered || !skillNeeded) {
+    throw new BadRequestError("skillOffered and skillNeeded are required");
   }
+  const newShare = await Share.create({
+    skillOffered,
+    skillNeeded,
+    description,
+    sharedBy: req.user.userId,
+  });
+  res.status(201).json(newShare);
 };
 
 module.exports = { getShared, createShare, getSharedByID };
